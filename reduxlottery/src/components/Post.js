@@ -1,23 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions/postActions';
 
 class Post extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            draws: []
-        }
-    }
-
     componentDidMount() {
-        fetch('https://www.masslottery.com/rest/keno/getDrawsByDateRange?startDate=2020-09-18&endDate=2020-09-18')
-            .then(res => res.json())
-            .then(data => this.setState(data, () => console.log(this.state)))
+        this.props.fetchPosts();
     }
 
     render() {
-        let draws = this.state.draws
-
-        const drawItems = draws.map(item =>(
+        const drawItems = this.props.posts.map(item => (
             <div key={item.draws}>
                 <h1>{item.bonus}</h1>
                 <h2>{item.winningNumbers}</h2>
@@ -32,4 +23,8 @@ class Post extends Component {
     }
 }
 
-export default Post;
+const mapStateToProps = state => ({
+    posts: state.posts.items
+});
+
+export default connect(mapStateToProps, { fetchPosts })(Post);
