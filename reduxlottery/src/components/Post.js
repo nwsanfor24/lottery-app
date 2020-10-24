@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/postActions';
+import MUIDataTable from "mui-datatables";
 
 class Post extends Component {
     componentDidMount() {
@@ -8,16 +9,30 @@ class Post extends Component {
     }
 
     render() {
-        const drawItems = this.props.posts.map(item => (
-            <div key={item.draws}>
-                <h1>{item.bonus}</h1>
-                <h2>{item.winningNumbers}</h2>
-            </div>
-        ));
+        const columns = ["Draw Number", "Bonus", "Draw Date", "Winning Numbers"];
+
+        const options = {
+            filterType: 'checkbox',
+            filter: true,
+            pageLength: 10,
+            responsive: 'stacked'
+        }
+
         return (
             <div>
-                <h1>Post</h1>
-                {drawItems}
+                <MUIDataTable
+                    title={"Massachusetts Lottery Numbers"}
+                    data={this.props.posts.map(item => {
+                        return [
+                            item.drawNumber,
+                            item.bonus,
+                            item.drawDate,
+                            item.winningNumbers
+                        ]
+                    })}
+                    columns={columns}
+                    options={options}
+                />
             </div>
         )
     }
