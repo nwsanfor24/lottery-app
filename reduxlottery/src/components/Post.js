@@ -9,7 +9,7 @@ class Post extends Component {
     }
 
     render() {
-        const columns = ["Game ID", "Draw Date", "Draw Number", "Bonus", "Winning Numbers"];
+        const columns = ["Draw Date", "Draw Number", "Bonus", "Winning Numbers"];
 
         const options = {
             filterType: 'checkbox'
@@ -20,7 +20,6 @@ class Post extends Component {
                 title={"Massachusetts State Lottery"}
                 data={this.props.posts.map(item => {
                     return [
-                        item.draws,
                         item.drawDate,
                         item.drawNumber,
                         item.bonus,
